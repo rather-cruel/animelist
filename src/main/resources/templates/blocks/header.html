@@ -1,0 +1,38 @@
+<nav th:fragment="header" class="navbar navbar-expand-lg navbar-dark bg-dark" aria-label="Eighth navbar example"
+     xmlns:th="http://www.w3.org/1999/xhtml">
+    <div class="container">
+        <a class="navbar-brand" href="/">AnimeList</a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarsExample07" aria-controls="navbarsExample07" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse" id="navbarsExample07">
+            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                <li class="nav-item">
+                    <a class="nav-link active" aria-current="page" href="/">Home</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/anime">Anime</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link disabled">Manga</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link disabled">Random Anime</a>
+                </li>
+<!--                <li class="nav-item dropdown">-->
+<!--                    <a class="nav-link dropdown-toggle" href="#" data-bs-toggle="dropdown" aria-expanded="false">Dropdown</a>-->
+<!--                    <ul class="dropdown-menu">-->
+<!--                        <li><a class="dropdown-item" href="#">Action</a></li>-->
+<!--                        <li><a class="dropdown-item" href="#">Another action</a></li>-->
+<!--                        <li><a class="dropdown-item" href="#">Something else here</a></li>-->
+<!--                    </ul>-->
+<!--                </li>-->
+            </ul>
+            <form th:action="@{/anime/search}" class="d-flex" role="search" method="post">
+                <input class="form-control mx-2" type="search" placeholder="Search" aria-label="Search" name="search">
+                <button type="submit" class="btn btn-warning">Find</button>
+            </form>
+        </div>
+    </div>
+</nav>
