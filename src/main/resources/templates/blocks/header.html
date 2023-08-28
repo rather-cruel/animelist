@@ -30,7 +30,7 @@
 <!--                </li>-->
             </ul>
             <form th:action="@{/anime/search}" class="d-flex" role="search" method="post">
-                <input class="form-control mx-2" type="search" placeholder="Search" aria-label="Search" name="search">
+                <input class="form-control mx-2" type="search" placeholder="Search" aria-label="Search" name="search" th:value="${text}">
                 <button type="submit" class="btn btn-warning">Find</button>
             </form>
         </div>

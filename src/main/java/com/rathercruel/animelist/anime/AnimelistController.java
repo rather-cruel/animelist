@@ -27,9 +27,7 @@ public class AnimelistController {
         return "index";
     }
 
-    @GetMapping("/anime")
-    public String animePage(Model model) throws IOException {
-        URL urlObject = new URL("https://api.jikan.moe/v4/top/anime");
+    private void printAnime(URL urlObject, List<Anime> animeList) throws IOException {
         HttpsURLConnection connection = (HttpsURLConnection) urlObject.openConnection();
         connection.setRequestMethod("GET");
 
@@ -38,8 +36,6 @@ public class AnimelistController {
         String animeSynopsis = "";
         String animeMyAnimeListURL = "";
         String animeJapaneseName = "";
-
-        List<Anime> animeList = new ArrayList<>();
 
         int responseCode = connection.getResponseCode();
         if (responseCode == HttpsURLConnection.HTTP_OK) {
@@ -59,8 +55,20 @@ public class AnimelistController {
 
                 animeMyAnimeListURL = (String) dataIndex.get("url");
                 animeTitle = (String) dataIndex.get("title");
-                animeImageURL = (String) jpg.get("large_image_url");
-                animeJapaneseName = (String) dataIndex.get("title_japanese");
+
+                if (!jpg.isNull("large_image_url")) {
+                    animeImageURL = (String) jpg.get("large_image_url");
+                } else {
+                    if (!jpg.isNull("image_url"))
+                        animeImageURL = (String) jpg.get("image_url");
+                    else if (!jpg.isNull("small_image_url"))
+                        animeImageURL = (String) jpg.get("small_image_url");
+                    else
+                        animeImageURL = "https://placehold.co/424x600?text=No+Image";
+                }
+
+                if (!dataIndex.isNull("title_japanese"))
+                    animeJapaneseName = (String) dataIndex.get("title_japanese");
 
                 if (!dataIndex.isNull("synopsis"))
                     animeSynopsis = (String) dataIndex.get("synopsis");
@@ -70,7 +78,14 @@ public class AnimelistController {
         } else {
             System.out.println("Response CODE: " + responseCode);
         }
+    }
 
+    @GetMapping("/anime")
+    public String animePage(Model model) throws IOException {
+        URL urlObject = new URL("https://api.jikan.moe/v4/top/anime");
+        List<Anime> animeList = new ArrayList<>();
+
+        printAnime(urlObject, animeList);
         model.addAttribute("animeList", animeList);
         return "anime";
     }
@@ -81,55 +96,21 @@ public class AnimelistController {
 
         String[] stringArray = search.split(" ");
         StringBuilder link = new StringBuilder();
+
         for (String s : stringArray) {
             link.append(s).append("%20");
         }
 
         URL urlObject = new URL("https://api.jikan.moe/v4/anime?q=" + link + "&sfw");
-        HttpsURLConnection connection = (HttpsURLConnection) urlObject.openConnection();
-        connection.setRequestMethod("GET");
-
-        String animeTitle = "";
-        String animeImageURL = "";
-        String animeSynopsis = "";
-        String animeMyAnimeListURL = "";
-        String animeJapaneseName = "";
-
         List<Anime> animeList = new ArrayList<>();
 
-        int responseCode = connection.getResponseCode();
-        if (responseCode == HttpsURLConnection.HTTP_OK) {
-            StringBuilder sb = new StringBuilder();
-            Scanner sc = new Scanner(connection.getInputStream());
-            while (sc.hasNext()) {
-                sb.append(sc.nextLine());
-            }
-
-            JSONObject jsonObject = new JSONObject(sb.toString());
-            JSONArray data = (JSONArray) jsonObject.get("data");
-
-            for (int i = 0; i < data.toList().size(); i++) {
-                JSONObject dataIndex = (JSONObject) data.get(i);
-                JSONObject images = (JSONObject) dataIndex.get("images");
-                JSONObject jpg = (JSONObject) images.get("jpg");
-
-                animeMyAnimeListURL = (String) dataIndex.get("url");
-                animeTitle = (String) dataIndex.get("title");
-                animeImageURL = (String) jpg.get("large_image_url");
-                animeJapaneseName = (String) dataIndex.get("title_japanese");
-
-                if (!dataIndex.isNull("synopsis"))
-                    animeSynopsis = (String) dataIndex.get("synopsis");
-
-                animeList.add(new Anime(animeTitle, animeImageURL, animeSynopsis, animeMyAnimeListURL, animeJapaneseName));
-            }
-        } else {
-            System.out.println("Response CODE: " + responseCode);
-        }
-
+        printAnime(urlObject, animeList);
         model.addAttribute("animeList", animeList);
 
-        return "anime-search";
+        if (!animeList.isEmpty())
+            return "anime-search";
+        else
+            return "search-not-found";
     }
 
     @PostMapping("/anime/search")

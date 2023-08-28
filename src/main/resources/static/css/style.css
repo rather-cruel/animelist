@@ -29,7 +29,8 @@
 
 .card-img, .card-img-top {
     object-fit: cover;
-    max-height: 360px;
+    object-position: center;
+    height: 360px;
     border-top-left-radius: var(--bs-card-inner-border-radius);
     border-top-right-radius: var(--bs-card-inner-border-radius);
 }
