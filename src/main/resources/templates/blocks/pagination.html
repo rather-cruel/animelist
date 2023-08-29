@@ -1,0 +1,54 @@
+<nav th:fragment="pagination" class="d-flex justify-content-center my-2" aria-label="Page navigation example">
+
+  <ul class="pagination" th:if="${current_page} == 1">
+    <li class="page-item"><a class="page-link disabled">Previous</a></li>
+
+    <li class="page-item"><a class="page-link disabled">1</a></li>
+    <li class="page-item"><a class="page-link" th:href="@{/anime/page=2&limit=24}">2</a></li>
+    <li class="page-item"><a class="page-link" th:href="@{/anime/page=3&limit=24}">3</a></li>
+
+    <li class="page-item"><a class="page-link" th:href="@{/anime/page=} + ${total_pages} + '&limit=24'">Last</a></li>
+    <li class="page-item"><a class="page-link" th:href="@{/anime/page=} + (${current_page} + 1) + '&limit=24'">Next</a></li>
+  </ul>
+
+
+  <ul class="pagination" th:if="${current_page} == 2">
+    <li class="page-item"><a class="page-link" th:href="@{/anime/page=} + (${current_page} - 1) + '&limit=24'">Previous</a></li>
+
+    <li class="page-item"><a class="page-link" th:href="@{/anime/page=1&limit=24}">1</a></li>
+    <li class="page-item"><a class="page-link disabled">2</a></li>
+    <li class="page-item"><a class="page-link" th:href="@{/anime/page=3&limit=24}">3</a></li>
+
+    <li class="page-item"><a class="page-link" th:href="@{/anime/page=} + ${total_pages} + '&limit=24'">Last</a></li>
+    <li class="page-item"><a class="page-link" th:href="@{/anime/page=} + (${current_page} + 1) + '&limit=24'">Next</a></li>
+  </ul>
+
+
+  <ul class="pagination" th:if="${current_page} > 2 and ${current_page} < (${total_pages})">
+    <li class="page-item"><a class="page-link" th:href="@{/anime/page=} + (${current_page} - 1) + '&limit=24'">Previous</a></li>
+    <li class="page-item"><a class="page-link" th:href="@{/anime/page=1&limit=24}">First</a></li>
+
+    <li class="page-item"><a th:text="${current_page} - 1" class="page-link"
+                             th:href="@{/anime/page=} + (${current_page} - 1) + '&limit=24'">1</a></li>
+
+    <li class="page-item"><a th:text="${current_page}" class="page-link disabled">2</a></li>
+
+    <li class="page-item"><a th:text="${current_page} + 1" class="page-link"
+                             th:href="@{/anime/page=} + (${current_page} + 1) + '&limit=24'">3</a></li>
+
+    <li class="page-item"><a class="page-link" th:href="@{/anime/page=} + ${total_pages} + '&limit=24'">Last</a></li>
+    <li class="page-item"><a class="page-link" th:href="@{/anime/page=} + (${current_page} + 1) + '&limit=24'">Next</a></li>
+  </ul>
+
+  <ul class="pagination" th:if="${current_page} == ${total_pages}">
+    <li class="page-item"><a class="page-link" th:href="@{/anime/page=} + (${current_page} - 1) + '&limit=24'">Previous</a></li>
+    <li class="page-item"><a class="page-link" th:href="@{/anime/page=1&limit=24}">First</a></li>
+
+    <li class="page-item"><a th:text="${current_page} - 2" class="page-link" th:href="@{/anime/page=} + (${current_page} - 2) + '&limit=24'">1</a></li>
+    <li class="page-item"><a th:text="${current_page} - 1" class="page-link" th:href="@{/anime/page=} + (${current_page} - 1) + '&limit=24'">2</a></li>
+    <li class="page-item"><a th:text="${current_page}" class="page-link disabled">3</a></li>
+
+    <li class="page-item"><a class="page-link disabled" th:href="@{/anime/page=} + ${total_pages} + '&limit=24'">Last</a></li>
+    <li class="page-item"><a class="page-link disabled" th:href="@{/anime/page=} + (${current_page} + 1) + '&limit=24'">Next</a></li>
+  </ul>
+</nav>

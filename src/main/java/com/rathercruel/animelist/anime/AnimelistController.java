@@ -21,11 +21,7 @@ import java.util.Scanner;
  */
 @Controller
 public class AnimelistController {
-
-    @GetMapping("/")
-    public String homePage() {
-        return "index";
-    }
+    private int totalPages = 0;
 
     private void printAnime(URL urlObject, List<Anime> animeList) throws IOException {
         HttpsURLConnection connection = (HttpsURLConnection) urlObject.openConnection();
@@ -35,7 +31,7 @@ public class AnimelistController {
         String animeImageURL = "";
         String animeSynopsis = "";
         String animeMyAnimeListURL = "";
-        String animeJapaneseName = "";
+        String animeTitleEnglish = "";
 
         int responseCode = connection.getResponseCode();
         if (responseCode == HttpsURLConnection.HTTP_OK) {
@@ -47,6 +43,9 @@ public class AnimelistController {
 
             JSONObject jsonObject = new JSONObject(sb.toString());
             JSONArray data = (JSONArray) jsonObject.get("data");
+
+            JSONObject pagination = (JSONObject) jsonObject.get("pagination");
+            totalPages = Integer.parseInt(pagination.get("last_visible_page").toString());
 
             for (int i = 0; i < data.toList().size(); i++) {
                 JSONObject dataIndex = (JSONObject) data.get(i);
@@ -67,32 +66,30 @@ public class AnimelistController {
                         animeImageURL = "https://placehold.co/424x600?text=No+Image";
                 }
 
-                if (!dataIndex.isNull("title_japanese"))
-                    animeJapaneseName = (String) dataIndex.get("title_japanese");
+                if (!dataIndex.isNull("title_english"))
+                    animeTitleEnglish = (String) dataIndex.get("title_english");
 
                 if (!dataIndex.isNull("synopsis"))
                     animeSynopsis = (String) dataIndex.get("synopsis");
 
-                animeList.add(new Anime(animeTitle, animeImageURL, animeSynopsis, animeMyAnimeListURL, animeJapaneseName));
+                animeList.add(new Anime(animeTitle, animeImageURL, animeSynopsis, animeMyAnimeListURL, animeTitleEnglish));
             }
         } else {
             System.out.println("Response CODE: " + responseCode);
         }
     }
 
-    @GetMapping("/anime")
-    public String animePage(Model model) throws IOException {
-        URL urlObject = new URL("https://api.jikan.moe/v4/top/anime");
-        List<Anime> animeList = new ArrayList<>();
-
-        printAnime(urlObject, animeList);
-        model.addAttribute("animeList", animeList);
-        return "anime";
+    @GetMapping("/")
+    public String homePage(Model model) {
+        model.addAttribute("site_title", "AnimeList");
+        return "index";
     }
 
     @GetMapping("/anime/search/{search}")
     public String animeSearchPage(Model model, @PathVariable String search) throws IOException {
         model.addAttribute("text", search);
+        String siteTitle = "AnimeList - " + search;
+        model.addAttribute("site_title", siteTitle);
 
         String[] stringArray = search.split(" ");
         StringBuilder link = new StringBuilder();
@@ -116,5 +113,36 @@ public class AnimelistController {
     @PostMapping("/anime/search")
     public String animeSearchAction(Model model, @RequestParam String search) {
         return "redirect:/anime/search/" + search;
+    }
+
+    // REDIRECTS
+    @GetMapping("/anime")
+    public String animeRedirect() {
+        return "redirect:/anime/page=1&limit=24";
+    }
+
+    @GetMapping("/anime/page={current_page}")
+    public String animeRedirectLimit(@PathVariable("current_page") int currentPage) {
+        return "redirect:/anime/page=" + currentPage + "&limit=24";
+    }
+
+    @GetMapping("/anime/page={current_page}&limit=24")
+    public String animePages(Model model, @PathVariable("current_page") int currentPage) throws IOException {
+        model.addAttribute("site_title", "AnimeList - Anime");
+        URL urlObject = new URL("https://api.jikan.moe/v4/top/anime?page=" + currentPage + "&limit=24");
+        List<Anime> animeList = new ArrayList<>();
+
+        printAnime(urlObject, animeList);
+        model.addAttribute("animeList", animeList);
+
+        model.addAttribute("current_page", currentPage);
+        model.addAttribute("total_pages", totalPages);
+
+        if (currentPage > 1060)
+            return "redirect:/anime/page=1060&limit=24";
+        else if (currentPage < 1)
+            return "redirect:/anime/page=1&limit=24";
+        else
+            return "anime";
     }
 }

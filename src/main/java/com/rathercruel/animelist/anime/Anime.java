@@ -1,38 +1,36 @@
 package com.rathercruel.animelist.anime;
 
-import jakarta.persistence.*;
-
 /**
  * @author Rather Cruel
  */
 public class Anime {
-    private String name;
+    private String title;
     private String image;
     private String synopsis;
     private String animeListURL;
-    private String japaneseName;
+    private String titleEnglish;
 
     public Anime() {
     }
 
-    public Anime(String name,
+    public Anime(String title,
                  String image,
                  String synopsis,
                  String animeListURL,
-                 String japaneseName) {
-        this.name = name;
+                 String titleEnglish) {
+        this.title = title;
         this.image = image;
         this.synopsis = synopsis;
         this.animeListURL = animeListURL;
-        this.japaneseName = japaneseName;
+        this.titleEnglish = titleEnglish;
     }
 
-    public String getName() {
-        return name;
+    public String getTitle() {
+        return title;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setTitle(String title) {
+        this.title = title;
     }
 
     public String getImage() {
@@ -59,11 +57,11 @@ public class Anime {
         this.animeListURL = animeListURL;
     }
 
-    public String getJapaneseName() {
-        return japaneseName;
+    public String getTitleEnglish() {
+        return titleEnglish;
     }
 
-    public void setJapaneseName(String japaneseName) {
-        this.japaneseName = japaneseName;
+    public void setTitleEnglish(String titleEnglish) {
+        this.titleEnglish = titleEnglish;
     }
 }
