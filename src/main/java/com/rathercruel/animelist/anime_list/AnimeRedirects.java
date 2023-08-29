@@ -1,5 +1,6 @@
-package com.rathercruel.animelist.anime;
+package com.rathercruel.animelist.anime_list;
 
+import com.rathercruel.animelist.get_anime.GetTop;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -30,6 +31,11 @@ public class AnimeRedirects {
         return "redirect:/anime/page=1&limit=24";
     }
 
+    @GetMapping("/anime/{id}")
+    public String animeRedirect3(@PathVariable("id") int id) {
+        return "redirect:/anime/view/" + id;
+    }
+
     @GetMapping("/anime/page")
     public String animeRedirect3() {
         return "redirect:/anime/page=1&limit=24";
@@ -47,9 +53,9 @@ public class AnimeRedirects {
 
     @GetMapping("/anime/page={current_page}")
     public String animeRedirectLimit(@PathVariable("current_page") int currentPage) {
-        AnimelistController animelistController = new AnimelistController();
-        if (currentPage > animelistController.getTotalPages())
-            return "redirect:/anime/page" + animelistController.getTotalPages() + "&limit=24";
+        GetTop getTop = new GetTop();
+        if (currentPage > getTop.getTotalPages())
+            return "redirect:/anime/page=" + getTop.getTotalPages() + "&limit=24";
         else
             return "redirect:/anime/page=" + currentPage + "&limit=24";
     }

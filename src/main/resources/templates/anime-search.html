@@ -19,7 +19,7 @@
                     Some quick example text to build on the card title and make up the bulk of the card's content.
                 </p>
                 <div class="d-flex justify-content-between">
-                    <a th:href="${anime.animeListURL}" target="_blank" class="btn btn-primary">View Anime</a>
+                    <a th:href="'/anime/view/' + ${anime.animeID}" class="btn btn-primary">View Anime</a>
                     <a th:href="${anime.animeListURL}" target="_blank" class="btn btn-outline-secondary
                     d-inline-flex align-items-center" type="button">MyAnimeList</a>
                 </div>

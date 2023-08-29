@@ -1,9 +1,10 @@
-package com.rathercruel.animelist.anime;
+package com.rathercruel.animelist.anime_list;
 
 /**
  * @author Rather Cruel
  */
 public class Anime {
+    private String animeID;
     private String title;
     private String image;
     private String synopsis;
@@ -13,16 +14,26 @@ public class Anime {
     public Anime() {
     }
 
-    public Anime(String title,
+    public Anime(String animeID,
+                 String title,
                  String image,
                  String synopsis,
                  String animeListURL,
                  String titleEnglish) {
+        this.animeID = animeID;
         this.title = title;
         this.image = image;
         this.synopsis = synopsis;
         this.animeListURL = animeListURL;
         this.titleEnglish = titleEnglish;
+    }
+
+    public String getAnimeID() {
+        return animeID;
+    }
+
+    public void setAnimeID(String animeID) {
+        this.animeID = animeID;
     }
 
     public String getTitle() {
