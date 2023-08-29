@@ -73,6 +73,7 @@ public class AnimePageController {
         model.addAttribute("anime_popularity", arr.get(17));
         model.addAttribute("anime_producers", arr.get(18));
         model.addAttribute("anime_genres", arr.get(19));
+        model.addAttribute("anime_trailer", arr.get(20));
         return "anime-page";
     }
 }

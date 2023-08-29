@@ -37,6 +37,7 @@ public class GetAnime {
         String animeYear = "";
         String animeFavorites = "";
         String animePopularity = "";
+        String animeTrailer = "";
 
         List<String> animeProducersList = new ArrayList<>();
 
@@ -55,6 +56,9 @@ public class GetAnime {
 
             JSONObject images = (JSONObject) data.get("images");
             JSONObject jpg = (JSONObject) images.get("jpg");
+
+            JSONObject trailer = (JSONObject) data.get("trailer");
+            animeTrailer = trailer.get("embed_url").toString();
 
             animeScore = data.get("score").toString();
             animeScoredBy = data.get("scored_by").toString();
@@ -127,8 +131,8 @@ public class GetAnime {
         }
         return List.of(
                 animeID, animeTitle, animeImageURL, animeSynopsis, animeMyAnimeListURL, animeTitleEnglish,
-                animeScore, animeScoredBy, animeRank, animeType, animeDuration, animeRating, animeBackground,
-                airing, animeStudio, animeYear, animeFavorites, animePopularity, animeProducers, animeGenres
+                animeScore, animeScoredBy, animeRank, animeType, animeDuration, animeRating, animeBackground, airing,
+                animeStudio, animeYear, animeFavorites, animePopularity, animeProducers, animeGenres, animeTrailer
         );
     }
 }

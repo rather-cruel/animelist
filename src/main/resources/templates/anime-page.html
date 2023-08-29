@@ -30,13 +30,21 @@
         <div class="right_page">
             <h1 th:text="${anime_title}"/>
             <h3 th:text="${anime_english_title}"/>
-            <div class="right_info">
-                <p th:utext="'<strong>Score: </strong>' + ${anime_score}"><strong>Score:</strong> 7.99</p>
-                <p th:utext="'<strong>Scored by: </strong>' + ${anime_scored_by}"><strong>Scored by:</strong> 7.99</p>
-                <p th:utext="'<strong>Type: </strong>' + ${anime_type}"><strong>Type:</strong> TV</p>
-                <p th:utext="'<strong>Duration: </strong>' + ${anime_duration}"><strong>Duration:</strong> 23 min per ep</p>
-                <p th:utext="'<strong>Genres: </strong>' + ${anime_genres}"><strong>Genres:</strong> Action, Adventure, Fantasy</p>
-                <p th:utext="'<strong>Rating: </strong>' + ${anime_rating}"><strong>Rating:</strong> PG-13 - Teens 13 or older</p>
+            <div class="right_info d-flex justify-content-between align-items-center">
+                <div class="right_anime_info">
+                    <p th:utext="'<strong>Score: </strong>' + ${anime_score}"><strong>Score:</strong> 7.99</p>
+                    <p th:utext="'<strong>Scored by: </strong>' + ${anime_scored_by}"><strong>Scored by:</strong> 7.99</p>
+                    <p th:utext="'<strong>Type: </strong>' + ${anime_type}"><strong>Type:</strong> TV</p>
+                    <p th:utext="'<strong>Duration: </strong>' + ${anime_duration}"><strong>Duration:</strong> 23 min per ep</p>
+                    <p th:utext="'<strong>Genres: </strong>' + ${anime_genres}"><strong>Genres:</strong> Action, Adventure, Fantasy</p>
+                    <p th:utext="'<strong>Rating: </strong>' + ${anime_rating}"><strong>Rating:</strong> PG-13 - Teens 13 or older</p>
+                </div>
+                <div th:if="${anime_trailer} != 'null'">
+                    <iframe width="312" height="180"
+                            title="anime trailer" th:src="${anime_trailer}"
+                            allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                            allowfullscreen></iframe>
+                </div>
             </div>
 
             <div class="anime_description my-3">

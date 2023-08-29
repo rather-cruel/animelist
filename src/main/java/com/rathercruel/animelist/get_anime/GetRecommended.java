@@ -48,30 +48,34 @@ public class GetRecommended {
 //            }
             JSONObject jsonObject = new JSONObject(sb.toString());
             JSONArray data = (JSONArray) jsonObject.get("data");
-            for (int i = 0; i < 8; i++) {
-                String image;
+            if (!data.toList().isEmpty()) {
+                int size = 8;
+                if (size > data.toList().size()) size = data.toList().size();
+                for (int i = 0; i < size; i++) {
+                    String image;
 
-                JSONObject object = (JSONObject) data.get(i);
-                JSONObject entry = (JSONObject) object.get("entry");
+                    JSONObject object = (JSONObject) data.get(i);
+                    JSONObject entry = (JSONObject) object.get("entry");
 
-                JSONObject images = (JSONObject) entry.get("images");
-                JSONObject jpg = (JSONObject) images.get("jpg");
+                    JSONObject images = (JSONObject) entry.get("images");
+                    JSONObject jpg = (JSONObject) images.get("jpg");
 
-                if (!jpg.isNull("large_image_url")) {
-                    image = (String) jpg.get("large_image_url");
-                } else {
-                    if (!jpg.isNull("image_url"))
-                        image = (String) jpg.get("image_url");
-                    else if (!jpg.isNull("small_image_url"))
-                        image = (String) jpg.get("small_image_url");
-                    else
-                        image = "https://placehold.co/424x600?text=No+Image";
+                    if (!jpg.isNull("large_image_url")) {
+                        image = (String) jpg.get("large_image_url");
+                    } else {
+                        if (!jpg.isNull("image_url"))
+                            image = (String) jpg.get("image_url");
+                        else if (!jpg.isNull("small_image_url"))
+                            image = (String) jpg.get("small_image_url");
+                        else
+                            image = "https://placehold.co/424x600?text=No+Image";
+                    }
+
+                    String id = entry.get("mal_id").toString();
+                    String title = (String) entry.get("title");
+                    String url = (String) entry.get("url");
+                    animeList.add(new RecommendedAnime(id, title, image, url));
                 }
-
-                String id = entry.get("mal_id").toString();
-                String title = (String) entry.get("title");
-                String url = (String) entry.get("url");
-                animeList.add(new RecommendedAnime(id, title, image, url));
             }
         } else {
             System.out.println("Response CODE: " + responseCode);
