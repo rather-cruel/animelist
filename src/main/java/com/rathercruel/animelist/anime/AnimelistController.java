@@ -23,14 +23,18 @@ import java.util.Scanner;
 public class AnimelistController {
     private int totalPages = 0;
 
+    public int getTotalPages() {
+        return totalPages;
+    }
+
     private void printAnime(URL urlObject, List<Anime> animeList) throws IOException {
         HttpsURLConnection connection = (HttpsURLConnection) urlObject.openConnection();
         connection.setRequestMethod("GET");
 
-        String animeTitle = "";
-        String animeImageURL = "";
+        String animeTitle;
+        String animeImageURL;
         String animeSynopsis = "";
-        String animeMyAnimeListURL = "";
+        String animeMyAnimeListURL;
         String animeTitleEnglish = "";
 
         int responseCode = connection.getResponseCode();
@@ -115,17 +119,6 @@ public class AnimelistController {
         return "redirect:/anime/search/" + search;
     }
 
-    // REDIRECTS
-    @GetMapping("/anime")
-    public String animeRedirect() {
-        return "redirect:/anime/page=1&limit=24";
-    }
-
-    @GetMapping("/anime/page={current_page}")
-    public String animeRedirectLimit(@PathVariable("current_page") int currentPage) {
-        return "redirect:/anime/page=" + currentPage + "&limit=24";
-    }
-
     @GetMapping("/anime/page={current_page}&limit=24")
     public String animePages(Model model, @PathVariable("current_page") int currentPage) throws IOException {
         model.addAttribute("site_title", "AnimeList - Anime");
@@ -138,8 +131,8 @@ public class AnimelistController {
         model.addAttribute("current_page", currentPage);
         model.addAttribute("total_pages", totalPages);
 
-        if (currentPage > 1060)
-            return "redirect:/anime/page=1060&limit=24";
+        if (currentPage > totalPages)
+            return "redirect:/anime/page=" + totalPages + "&limit=24";
         else if (currentPage < 1)
             return "redirect:/anime/page=1&limit=24";
         else
