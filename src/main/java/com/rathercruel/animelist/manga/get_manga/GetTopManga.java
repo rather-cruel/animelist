@@ -1,35 +1,38 @@
-package com.rathercruel.animelist.get_anime;
+package com.rathercruel.animelist.manga.get_manga;
 
-import com.rathercruel.animelist.anime_list.Anime;
+import com.rathercruel.animelist.anime.anime_list.Anime;
+import com.rathercruel.animelist.manga.manga_list.Manga;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
 import javax.net.ssl.HttpsURLConnection;
 import java.io.IOException;
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
 /**
  * @author Rather Cruel
  */
-public class GetTop {
+public class GetTopManga {
     private int totalPages;
 
     public int getTotalPages() {
         return totalPages;
     }
 
-    public void getAnimeTop(URL urlObject, List<Anime> animeList) throws IOException {
+    public List<Manga> getMangaTop(URL urlObject) throws IOException {
+        List<Manga> mangaList = new ArrayList<>();
         HttpsURLConnection connection = (HttpsURLConnection) urlObject.openConnection();
         connection.setRequestMethod("GET");
 
-        String animeID;
-        String animeTitle;
-        String animeImageURL;
-        String animeSynopsis = "";
-        String animeMyAnimeListURL;
-        String animeTitleEnglish = "";
+        String mangaID;
+        String mangaTitle;
+        String mangaImage;
+        String mangaSynopsis = "";
+        String mangaMyAnimeListURL;
+        String mangaTitleEnglish = "";
 
         int responseCode = connection.getResponseCode();
         if (responseCode == HttpsURLConnection.HTTP_OK) {
@@ -50,32 +53,33 @@ public class GetTop {
                 JSONObject images = (JSONObject) dataIndex.get("images");
                 JSONObject jpg = (JSONObject) images.get("jpg");
 
-                animeID = dataIndex.get("mal_id").toString();
+                mangaID = dataIndex.get("mal_id").toString();
 
-                animeMyAnimeListURL = (String) dataIndex.get("url");
-                animeTitle = (String) dataIndex.get("title");
+                mangaMyAnimeListURL = (String) dataIndex.get("url");
+                mangaTitle = (String) dataIndex.get("title");
 
                 if (!jpg.isNull("large_image_url")) {
-                    animeImageURL = (String) jpg.get("large_image_url");
+                    mangaImage = (String) jpg.get("large_image_url");
                 } else {
                     if (!jpg.isNull("image_url"))
-                        animeImageURL = (String) jpg.get("image_url");
+                        mangaImage = (String) jpg.get("image_url");
                     else if (!jpg.isNull("small_image_url"))
-                        animeImageURL = (String) jpg.get("small_image_url");
+                        mangaImage = (String) jpg.get("small_image_url");
                     else
-                        animeImageURL = "https://placehold.co/424x600?text=No+Image";
+                        mangaImage = "https://placehold.co/424x600?text=No+Image";
                 }
 
                 if (!dataIndex.isNull("title_english"))
-                    animeTitleEnglish = (String) dataIndex.get("title_english");
+                    mangaTitleEnglish = (String) dataIndex.get("title_english");
 
                 if (!dataIndex.isNull("synopsis"))
-                    animeSynopsis = (String) dataIndex.get("synopsis");
+                    mangaSynopsis = (String) dataIndex.get("synopsis");
 
-                animeList.add(new Anime(animeID, animeTitle, animeImageURL, animeSynopsis, animeMyAnimeListURL, animeTitleEnglish));
+                mangaList.add(new Manga(mangaID, mangaTitle, mangaImage, mangaSynopsis, mangaMyAnimeListURL, mangaTitleEnglish));
             }
         } else {
             System.out.println("Response CODE: " + responseCode);
         }
+        return mangaList;
     }
 }

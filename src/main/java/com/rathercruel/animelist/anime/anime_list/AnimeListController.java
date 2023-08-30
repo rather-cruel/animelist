@@ -1,6 +1,6 @@
-package com.rathercruel.animelist.anime_list;
+package com.rathercruel.animelist.anime.anime_list;
 
-import com.rathercruel.animelist.get_anime.GetTop;
+import com.rathercruel.animelist.anime.get_anime.GetTopAnime;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -19,12 +19,6 @@ import java.util.List;
 @Controller
 public class AnimeListController {
 
-    @GetMapping("/")
-    public String homePage(Model model) {
-        model.addAttribute("site_title", "AnimeList");
-        return "index";
-    }
-
     @GetMapping("/anime/search/{search}")
     public String animeSearchPage(Model model, @PathVariable String search) throws IOException {
         model.addAttribute("text", search);
@@ -38,15 +32,15 @@ public class AnimeListController {
             link.append(s).append("%20");
         }
 
-        URL urlObject = new URL("https://api.jikan.moe/v4/anime?q=" + link + "&sfw");
+        URL urlObject = new URL("https://api.jikan.moe/v4/anime?q=" + link + "&limit=24&sfw");
         List<Anime> animeList = new ArrayList<>();
 
-        GetTop getTop = new GetTop();
-        getTop.getAnimeTop(urlObject, animeList);
+        GetTopAnime getTopAnime = new GetTopAnime();
+        getTopAnime.getAnimeTop(urlObject, animeList);
         model.addAttribute("animeList", animeList);
 
         if (!animeList.isEmpty())
-            return "anime-search";
+            return "anime/anime-search";
         else
             return "search-not-found";
     }
@@ -56,24 +50,25 @@ public class AnimeListController {
         return "redirect:/anime/search/" + search;
     }
 
-    @GetMapping("/anime/page={current_page}&limit=24")
+    @GetMapping("/anime/page={current_page}")
     public String animePages(Model model, @PathVariable("current_page") int currentPage) throws IOException {
         model.addAttribute("site_title", "AnimeList - Anime");
-        URL urlObject = new URL("https://api.jikan.moe/v4/top/anime?page=" + currentPage + "&limit=24");
+        URL urlObject = new URL("https://api.jikan.moe/v4/top/anime?page=" + currentPage + "&limit=24&sfw");
         List<Anime> animeList = new ArrayList<>();
 
-        GetTop getTop = new GetTop();
-        getTop.getAnimeTop(urlObject, animeList);
+        GetTopAnime getTopAnime = new GetTopAnime();
+        getTopAnime.getAnimeTop(urlObject, animeList);
         model.addAttribute("animeList", animeList);
+        model.addAttribute("pagination_type", "anime");
 
         model.addAttribute("current_page", currentPage);
-        model.addAttribute("total_pages", getTop.getTotalPages());
+        model.addAttribute("total_pages", getTopAnime.getTotalPages());
 
-        if (currentPage > getTop.getTotalPages())
-            return "redirect:/anime/page=" + getTop.getTotalPages() + "&limit=24";
+        if (currentPage > getTopAnime.getTotalPages())
+            return "redirect:/anime/page=" + getTopAnime.getTotalPages();
         else if (currentPage < 1)
-            return "redirect:/anime/page=1&limit=24";
+            return "redirect:/anime/page=1";
         else
-            return "anime";
+            return "anime/anime";
     }
 }

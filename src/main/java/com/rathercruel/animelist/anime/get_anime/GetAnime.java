@@ -1,5 +1,6 @@
-package com.rathercruel.animelist.get_anime;
+package com.rathercruel.animelist.anime.get_anime;
 
+import com.rathercruel.animelist.anime.anime_page.AnimeInformation;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
@@ -14,7 +15,7 @@ import java.util.Scanner;
  * @author Rather Cruel
  */
 public class GetAnime {
-    public List<String> getAnime(URL urlObject) throws IOException {
+    public List<AnimeInformation> getAnime(URL urlObject) throws IOException {
         HttpsURLConnection connection = (HttpsURLConnection) urlObject.openConnection();
         connection.setRequestMethod("GET");
 
@@ -38,10 +39,15 @@ public class GetAnime {
         String animeFavorites = "";
         String animePopularity = "";
         String animeTrailer = "";
+        String animeEpisodes = "";
+
+        String animeProducers = "";
+        String animeGenres = "";
+        String animeLicensors = "";
 
         List<String> animeProducersList = new ArrayList<>();
-
         List<String> animeGenresList = new ArrayList<>();
+        List<String> animeLicensorList = new ArrayList<>();
 
         int responseCode = connection.getResponseCode();
         if (responseCode == HttpsURLConnection.HTTP_OK) {
@@ -53,6 +59,14 @@ public class GetAnime {
 
             JSONObject jsonObject = new JSONObject(sb.toString());
             JSONObject data = (JSONObject) jsonObject.get("data");
+
+            try {
+                JSONArray licensorsArray = (JSONArray) data.get("licensors");
+                for (int i = 0; i < licensorsArray.toList().size(); i++) {
+                    JSONObject licensors = (JSONObject) licensorsArray.get(i);
+                    animeLicensorList.add(licensors.get("name").toString());
+                }
+            } catch (Exception ignored) {}
 
             JSONObject images = (JSONObject) data.get("images");
             JSONObject jpg = (JSONObject) images.get("jpg");
@@ -67,23 +81,30 @@ public class GetAnime {
             animeDuration = data.get("duration").toString();
             animeRating = data.get("rating").toString();
             animeBackground = data.get("background").toString();
+            animeEpisodes = data.get("episodes").toString();
 
             JSONObject airiedObj = (JSONObject) data.get("aired");
             airing = airiedObj.get("string").toString();
 
-            JSONArray studioArray = (JSONArray) data.get("studios");
-            JSONObject studioData = (JSONObject) studioArray.get(0);
-            animeStudio = studioData.get("name").toString();
+            try {
+                JSONArray studioArray = (JSONArray) data.get("studios");
+                JSONObject studioData = (JSONObject) studioArray.get(0);
+                animeStudio = studioData.get("name").toString();
+            } catch (Exception ignored) {
+                animeStudio = "No Data";
+            }
 
             animeYear = data.get("year").toString();
             animeFavorites = data.get("favorites").toString();
             animePopularity = data.get("popularity").toString();
 
-            JSONArray producers = (JSONArray) data.get("producers");
-            for (int i = 0; i < producers.toList().size(); i++) {
-                JSONObject producer = (JSONObject) producers.get(i);
-                animeProducersList.add(producer.get("name").toString());
-            }
+            try {
+                JSONArray producers = (JSONArray) data.get("producers");
+                for (int i = 0; i < producers.toList().size(); i++) {
+                    JSONObject producer = (JSONObject) producers.get(i);
+                    animeProducersList.add(producer.get("name").toString());
+                }
+            } catch (Exception ignored) {}
 
             JSONArray genres = (JSONArray) data.get("genres");
             for (int i = 0; i < genres.toList().size(); i++) {
@@ -115,24 +136,31 @@ public class GetAnime {
         } else {
             System.out.println("Response CODE: " + responseCode);
         }
-        String animeProducers = "";
-        String animeGenres = "";
-        for (int i = 0; i < animeProducersList.size(); i++) {
-            if (i != animeProducersList.size() - 1)
-                animeProducers += animeProducersList.get(i) + ", ";
-            else
-                animeProducers += animeProducersList.get(i);
+        List<String> animeStringLists = new ArrayList<>();
+
+        List<List<String>> animeLists = new ArrayList<>();
+        animeLists.add(animeProducersList);
+        animeLists.add(animeGenresList);
+        animeLists.add(animeLicensorList);
+
+        for (List<String> animeList : animeLists) {
+            StringBuilder tempString = new StringBuilder();
+            for (int j = 0; j < animeList.size(); j++) {
+                tempString.append(animeList.get(j));
+                if (j != animeList.size() - 1) tempString.append(", ");
+            }
+            animeStringLists.add(tempString.toString());
         }
-        for (int i = 0; i < animeGenresList.size(); i++) {
-            if (i != animeProducersList.size() - 1)
-                animeGenres += animeGenresList.get(i) + ", ";
-            else
-                animeGenres += animeGenresList.get(i);
-        }
+
+        animeProducers = animeStringLists.get(0);
+        animeGenres = animeStringLists.get(1);
+        animeLicensors = animeStringLists.get(2);
+
         return List.of(
-                animeID, animeTitle, animeImageURL, animeSynopsis, animeMyAnimeListURL, animeTitleEnglish,
-                animeScore, animeScoredBy, animeRank, animeType, animeDuration, animeRating, animeBackground, airing,
-                animeStudio, animeYear, animeFavorites, animePopularity, animeProducers, animeGenres, animeTrailer
+                new AnimeInformation(animeID, animeTitle, animeImageURL, animeSynopsis, animeMyAnimeListURL, animeTitleEnglish,
+                        animeScore, animeScoredBy, animeRank, animeType, animeDuration, animeRating, animeBackground, airing,
+                        animeStudio, animeYear, animeFavorites, animePopularity, animeProducers, animeGenres,
+                        animeTrailer, animeEpisodes, animeLicensors)
         );
     }
 }

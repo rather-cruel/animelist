@@ -1,13 +1,14 @@
-package com.rathercruel.animelist.get_anime;
+package com.rathercruel.animelist.anime.get_anime;
 
-import com.rathercruel.animelist.anime_list.Anime;
-import com.rathercruel.animelist.anime_page.RecommendedAnime;
+import com.rathercruel.animelist.anime.anime_page.RecommendedAnime;
+import com.rathercruel.animelist.anime.anime_page.RelatedContent;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
 import javax.net.ssl.HttpsURLConnection;
 import java.io.IOException;
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
@@ -15,7 +16,8 @@ import java.util.Scanner;
  * @author Rather Cruel
  */
 public class GetRecommended {
-    public void getAnimeRecommendations(URL urlObject, List<RecommendedAnime> animeList) throws IOException {
+    public List<RecommendedAnime> getAnimeRecommendations(URL urlObject) throws IOException {
+        List<RecommendedAnime> animeList = new ArrayList<>();
         HttpsURLConnection connection = (HttpsURLConnection) urlObject.openConnection();
         connection.setRequestMethod("GET");
 
@@ -29,23 +31,6 @@ public class GetRecommended {
                 sb.append(sc.nextLine());
             }
 
-//            JSONObject jsonObject = new JSONObject(sb.toString());
-//            JSONArray dataArray = (JSONArray) jsonObject.get("data");
-//            for (int i = 0; i < 1; i++) {
-//                JSONObject object = (JSONObject) dataArray.get(i);
-//                JSONObject entry = (JSONObject) object.get("entry");
-//                animeID = entry.get("mal_id").toString();
-//
-//                URL animeURL = new URL("https://api.jikan.moe/v4/anime/" + animeID);
-//                GetAnime getAnime = new GetAnime();
-//                List<String> arr = getAnime.getAnime(animeURL);
-//                String animeTitle = arr.get(1);
-//                String animeImageURL = arr.get(2);
-//                String animeSynopsis = arr.get(3);
-//                String animeMyAnimeListURL = arr.get(4);
-//                String animeTitleEnglish = arr.get(5);
-//                animeList.add(new Anime(animeID, animeTitle, animeImageURL, animeSynopsis, animeMyAnimeListURL, animeTitleEnglish));
-//            }
             JSONObject jsonObject = new JSONObject(sb.toString());
             JSONArray data = (JSONArray) jsonObject.get("data");
             if (!data.toList().isEmpty()) {
@@ -80,5 +65,6 @@ public class GetRecommended {
         } else {
             System.out.println("Response CODE: " + responseCode);
         }
+        return animeList;
     }
 }

@@ -12,22 +12,17 @@
                     <a class="nav-link active" aria-current="page" href="/">Home</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="/anime/page=1&limit=24">Anime</a>
+                    <a class="nav-link" href="/anime/page=1">Anime</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link disabled">Manga</a>
+                    <a class="nav-link" href="/manga/page=1">Manga</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link disabled">Random Anime</a>
                 </li>
-<!--                <li class="nav-item dropdown">-->
-<!--                    <a class="nav-link dropdown-toggle" href="#" data-bs-toggle="dropdown" aria-expanded="false">Dropdown</a>-->
-<!--                    <ul class="dropdown-menu">-->
-<!--                        <li><a class="dropdown-item" href="#">Action</a></li>-->
-<!--                        <li><a class="dropdown-item" href="#">Another action</a></li>-->
-<!--                        <li><a class="dropdown-item" href="#">Something else here</a></li>-->
-<!--                    </ul>-->
-<!--                </li>-->
+                <li class="nav-item">
+                    <a class="nav-link disabled">Random Manga</a>
+                </li>
             </ul>
             <form th:action="@{/anime/search}" class="d-flex" role="search" method="post">
                 <input class="form-control mx-2" type="search" placeholder="Search" aria-label="Search" name="search" th:value="${text}">

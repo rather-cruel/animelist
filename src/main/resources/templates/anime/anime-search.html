@@ -6,7 +6,7 @@
 <div th:replace="~{blocks/header :: header}"/>
 
 <div class="container">
-    <h1 class="my-2">Anime</h1>
+    <h1 class="my-2" th:text="'Looking for ' + ${text}">Search: Anime</h1>
     <div class="row row-cols-auto">
         <div th:each="anime : ${animeList}" class="anime-col-card col card my-2" style="width: 18rem;">
             <img th:src="${anime.image}" class="card-img-top" alt="600x400">
@@ -18,7 +18,7 @@
                     Some quick example text to build on the card title and make up the bulk of the card's content.
                     Some quick example text to build on the card title and make up the bulk of the card's content.
                 </p>
-                <div class="d-flex justify-content-between my-3">
+                <div class="d-flex justify-content-between">
                     <a th:href="'/anime/view/' + ${anime.animeID}" class="btn btn-primary">View Anime</a>
                     <a th:href="${anime.animeListURL}" target="_blank" class="btn btn-outline-secondary
                     d-inline-flex align-items-center" type="button">MyAnimeList</a>
@@ -26,20 +26,7 @@
             </div>
         </div>
     </div>
-
-    <div th:replace="~{blocks/pagination :: pagination}"/>
 </div>
-
-<style>
-    body {
-        display: flex;
-        flex-direction: column;
-        min-height: 100vh;
-    }
-    footer {
-        margin-top: auto;
-    }
-</style>
 
 <div th:replace="~{blocks/footer :: footer}"/>
 

@@ -1,4 +1,4 @@
-package com.rathercruel.animelist.anime_list;
+package com.rathercruel.animelist.anime.anime_list;
 
 /**
  * @author Rather Cruel
