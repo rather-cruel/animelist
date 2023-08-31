@@ -7,6 +7,7 @@ I'm using here: Spring, Jikan API, Gradle (Kotlin), JSON and my brain
 ![anime-view-2](https://github.com/rather-cruel/animelist/assets/106997330/30b169ea-1e80-4ddb-94d3-6d9f51543624)
 ![anime-recommendations](https://github.com/rather-cruel/animelist/assets/106997330/aade0e6e-dcca-4d0e-9e03-ea6106d8e4d8)
 ![anime-recommendations-2](https://github.com/rather-cruel/animelist/assets/106997330/8399e21a-3b81-4158-b206-8d9a372f2ba3)
+![manga-page](https://github.com/rather-cruel/animelist/assets/106997330/77026600-d384-4156-8d27-ee2cc986e6cf)
 ![manga-view](https://github.com/rather-cruel/animelist/assets/106997330/af70748f-c2cf-49c1-a699-6c71876c8589)
 ![manga-view-2](https://github.com/rather-cruel/animelist/assets/106997330/7179d7c2-6528-48fc-b873-e022b5e0ace2)
 ![manga-recommendations](https://github.com/rather-cruel/animelist/assets/106997330/26c4d5c4-ee3c-4cf7-a22e-6d3b9f607e41)
