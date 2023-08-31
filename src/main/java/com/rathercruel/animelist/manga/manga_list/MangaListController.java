@@ -24,7 +24,9 @@ public class MangaListController {
         GetTopManga getTopManga = new GetTopManga();
         List<Manga> mangaList = getTopManga.getMangaTop(urlObject);
 
-        model.addAttribute("mangaList", mangaList);
+        model.addAttribute("content_type", "manga");
+        model.addAttribute("content_h1", "Manga");
+        model.addAttribute("content_list", mangaList);
         model.addAttribute("pagination_type", "manga");
 
         model.addAttribute("current_page", currentPage);
@@ -35,6 +37,6 @@ public class MangaListController {
         else if (currentPage < 1)
             return "redirect:/manga/page=1";
         else
-            return "manga/manga";
+            return "content/content";
     }
 }

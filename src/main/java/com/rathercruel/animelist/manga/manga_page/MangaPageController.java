@@ -21,24 +21,24 @@ import java.util.List;
 public class MangaPageController {
 
     @GetMapping("/manga/view/{manga_id}")
-    public String animePage(Model model, @PathVariable("manga_id") String mangaID) throws IOException {
+    public String mangaPage(Model model, @PathVariable("manga_id") String mangaID) throws IOException {
         URL url = new URL("https://api.jikan.moe/v4/manga/" + mangaID + "/full");
         URL urlRecommendations = new URL("https://api.jikan.moe/v4/manga/" + mangaID + "/recommendations");
         GetManga manga = new GetManga();
 
         List<MangaInformation> mangaInformationList = manga.getManga(url);
 
-        List<RecommendedAnime> animeList;
+        List<RecommendedAnime> mangaList;
         List<RelatedContent> relatedContentList;
 
         GetRecommended getRecommended = new GetRecommended();
         GetRelatedContent getRelatedContent = new GetRelatedContent();
-
+        mangaList = getRecommended.getAnimeRecommendations(urlRecommendations);
         relatedContentList = getRelatedContent.getRelatedContent(url);
-        animeList = getRecommended.getAnimeRecommendations(urlRecommendations);
-        model.addAttribute("anime_list", animeList);
-        model.addAttribute("anime_information", mangaInformationList.get(0));
-        model.addAttribute("anime_relations", relatedContentList);
-        return "manga/manga-page";
+        model.addAttribute("content_kind", "manga");
+        model.addAttribute("content_list", mangaList);
+        model.addAttribute("content_information", mangaInformationList.get(0));
+        model.addAttribute("content_relations", relatedContentList);
+        return "content/content-page";
     }
 }

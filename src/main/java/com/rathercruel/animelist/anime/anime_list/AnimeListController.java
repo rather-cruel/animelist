@@ -1,6 +1,8 @@
 package com.rathercruel.animelist.anime.anime_list;
 
 import com.rathercruel.animelist.anime.get_anime.GetTopAnime;
+import com.rathercruel.animelist.manga.get_manga.GetTopManga;
+import com.rathercruel.animelist.manga.manga_list.Manga;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -32,15 +34,19 @@ public class AnimeListController {
             link.append(s).append("%20");
         }
 
-        URL urlObject = new URL("https://api.jikan.moe/v4/anime?q=" + link + "&limit=24&sfw");
-        List<Anime> animeList = new ArrayList<>();
-
+        URL animeUrlObject = new URL("https://api.jikan.moe/v4/anime?q=" + link + "&sfw");
+        URL mangaUrlObject = new URL("https://api.jikan.moe/v4/manga?q=" + link + "&sfw");
         GetTopAnime getTopAnime = new GetTopAnime();
-        getTopAnime.getAnimeTop(urlObject, animeList);
+        GetTopManga getTopManga = new GetTopManga();
+
+        List<Anime> animeList = getTopAnime.getAnimeTop(animeUrlObject);
+        List<Manga> mangaList = getTopManga.getMangaTop(mangaUrlObject);
+
         model.addAttribute("animeList", animeList);
+        model.addAttribute("mangaList", mangaList);
 
         if (!animeList.isEmpty())
-            return "anime/anime-search";
+            return "content/content-search";
         else
             return "search-not-found";
     }
@@ -54,11 +60,13 @@ public class AnimeListController {
     public String animePages(Model model, @PathVariable("current_page") int currentPage) throws IOException {
         model.addAttribute("site_title", "AnimeList - Anime");
         URL urlObject = new URL("https://api.jikan.moe/v4/top/anime?page=" + currentPage + "&limit=24&sfw");
-        List<Anime> animeList = new ArrayList<>();
-
         GetTopAnime getTopAnime = new GetTopAnime();
-        getTopAnime.getAnimeTop(urlObject, animeList);
-        model.addAttribute("animeList", animeList);
+
+        List<Anime> animeList = getTopAnime.getAnimeTop(urlObject);
+
+        model.addAttribute("content_type", "anime");
+        model.addAttribute("content_h1", "Anime");
+        model.addAttribute("content_list", animeList);
         model.addAttribute("pagination_type", "anime");
 
         model.addAttribute("current_page", currentPage);
@@ -69,6 +77,21 @@ public class AnimeListController {
         else if (currentPage < 1)
             return "redirect:/anime/page=1";
         else
-            return "anime/anime";
+            return "content/content";
     }
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+    <div th:replace="~{blocks/head :: head}"/>
+<body>
+
+<div th:replace="~{blocks/header :: header}"/>
+
+<div class="container">
+    <h1 class="my-2" th:text="'Looking for ' + ${text}">Search: Anime</h1>
+    <h2 th:if="${not #lists.isEmpty(animeList)}">Anime:</h2>
+    <div th:if="${not #lists.isEmpty(animeList)}" class="row row-cols-auto">
+        <div th:each="anime : ${animeList}" class="anime-col-card col card my-2" style="width: 18rem;">
+            <img th:src="${anime.image}" class="card-img-top" alt="600x400">
+            <div class="card-body">
+                <h5 class="cutoff-title card-title" th:text="${anime.title}" th:title="${anime.title}"/>
+                <small class="cutoff-title card-title" th:text="${anime.titleEnglish}" th:title="${anime.titleEnglish}"/>
+                <p class="cutoff-text card-text" th:text="${anime.synopsis}"/>
+                <div class="d-flex justify-content-between my-3">
+                    <a th:href="'/anime/view/' + ${anime.id}" class="btn btn-primary">View Anime</a>
+                    <a th:href="${anime.animeListURL}" target="_blank" class="btn btn-outline-secondary
+                d-inline-flex align-items-center" type="button">MyAnimeList</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <h2 th:if="${not #lists.isEmpty(mangaList)}">Manga:</h2>
+    <div th:if="${not #lists.isEmpty(mangaList)}" class="row row-cols-auto">
+        <div th:each="manga : ${mangaList}" class="anime-col-card col card my-2" style="width: 18rem;">
+            <img th:src="${manga.image}" class="card-img-top" alt="600x400">
+            <div class="card-body">
+                <h5 class="cutoff-title card-title" th:text="${manga.title}" th:title="${manga.title}"/>
+                <small class="cutoff-title card-title" th:text="${manga.titleEnglish}" th:title="${manga.titleEnglish}"/>
+                <p class="cutoff-text card-text" th:text="${manga.synopsis}"/>
+                <div class="d-flex justify-content-between">
+                    <a th:href="'/manga/view/' + ${manga.id}" class="btn btn-primary">View Anime</a>
+                    <a th:href="${manga.animeListURL}" target="_blank" class="btn btn-outline-secondary
+                d-inline-flex align-items-center" type="button">MyAnimeList</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div th:replace="~{blocks/footer :: footer}"/>
+
+</body>
+</html>

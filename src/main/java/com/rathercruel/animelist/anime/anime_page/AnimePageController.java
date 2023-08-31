@@ -10,7 +10,6 @@ import org.springframework.web.bind.annotation.PathVariable;
 
 import java.io.IOException;
 import java.net.URL;
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -23,9 +22,9 @@ public class AnimePageController {
     public String animePage(Model model, @PathVariable("anime_id") String animeID) throws IOException {
         URL url = new URL("https://api.jikan.moe/v4/anime/" + animeID + "/full");
         URL urlRecommendations = new URL("https://api.jikan.moe/v4/anime/" + animeID + "/recommendations");
-        GetAnime getAnime = new GetAnime();
+        GetAnime anime = new GetAnime();
 
-        List<AnimeInformation> animeInformationList = getAnime.getAnime(url);
+        List<AnimeInformation> animeInformationList = anime.getAnime(url);
 
         List<RecommendedAnime> animeList;
         List<RelatedContent> relatedContentList;
@@ -34,10 +33,10 @@ public class AnimePageController {
         GetRelatedContent getRelatedContent = new GetRelatedContent();
         animeList = getRecommended.getAnimeRecommendations(urlRecommendations);
         relatedContentList = getRelatedContent.getRelatedContent(url);
-
-        model.addAttribute("anime_list", animeList);
-        model.addAttribute("anime_information", animeInformationList.get(0));
-        model.addAttribute("anime_relations", relatedContentList);
-        return "anime/anime-page";
+        model.addAttribute("content_kind", "anime");
+        model.addAttribute("content_list", animeList);
+        model.addAttribute("content_information", animeInformationList.get(0));
+        model.addAttribute("content_relations", relatedContentList);
+        return "content/content-page";
     }
 }

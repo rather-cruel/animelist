@@ -7,6 +7,7 @@ import org.json.JSONObject;
 import javax.net.ssl.HttpsURLConnection;
 import java.io.IOException;
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
@@ -20,7 +21,8 @@ public class GetTopAnime {
         return totalPages;
     }
 
-    public void getAnimeTop(URL urlObject, List<Anime> animeList) throws IOException {
+    public List<Anime> getAnimeTop(URL urlObject) throws IOException {
+        List<Anime> animeList = new ArrayList<>();
         HttpsURLConnection connection = (HttpsURLConnection) urlObject.openConnection();
         connection.setRequestMethod("GET");
 
@@ -77,5 +79,6 @@ public class GetTopAnime {
         } else {
             System.out.println("Response CODE: " + responseCode);
         }
+        return animeList;
     }
 }

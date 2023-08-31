@@ -9,29 +9,31 @@ public class MangaInformation {
     private String image;
     private String title;
     private String titleEnglish;
-    private String type;
-    private String chapters;
-    private String volumes;
-    private String status;
-    private String published;
+    private String desc;
     private String score;
     private String scoredBy;
     private String rank;
-    private String popularity;
-    private String members;
-    private String favorites;
-    private String synopsis;
     private String background;
-    private String authors;
+    private String favorites;
+    private String type;
     private String genres;
+    private String popularity;
+    private String published;
+
+    private String status;
+    private String members;
+    private String authors;
+    private String chapters;
+    private String volumes;
 
     public MangaInformation() {}
 
-    public MangaInformation(String id, String myAnimeListURL, String image, String title,
-                            String titleEnglish, String type, String chapters, String volumes,
-                            String status, String published, String score, String scoredBy,
-                            String rank, String popularity, String members, String favorites,
-                            String synopsis, String background, String authors, String genres
+    public MangaInformation(
+            String id, String myAnimeListURL, String image, String title,
+            String titleEnglish, String type, String chapters, String volumes,
+            String status, String published, String score, String scoredBy,
+            String rank, String popularity, String members, String favorites,
+            String desc, String background, String authors, String genres
     ) {
         this.id = id;
         this.myAnimeListURL = myAnimeListURL;
@@ -49,7 +51,7 @@ public class MangaInformation {
         this.popularity = popularity;
         this.members = members;
         this.favorites = favorites;
-        this.synopsis = synopsis;
+        this.desc = desc;
         this.background = background;
         this.authors = authors;
         this.genres = genres;
@@ -183,12 +185,12 @@ public class MangaInformation {
         this.favorites = favorites;
     }
 
-    public String getSynopsis() {
-        return synopsis;
+    public String getDesc() {
+        return desc;
     }
 
-    public void setSynopsis(String synopsis) {
-        this.synopsis = synopsis;
+    public void setDesc(String desc) {
+        this.desc = desc;
     }
 
     public String getBackground() {

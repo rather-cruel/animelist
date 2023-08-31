@@ -5,25 +5,26 @@ package com.rathercruel.animelist.anime.anime_page;
  */
 public class AnimeInformation {
     private String id;
-    private String title;
-    private String image;
-    private String desc;
     private String myAnimeListURL;
+    private String image;
+    private String title;
     private String titleEnglish;
+    private String desc;
     private String score;
     private String scoredBy;
     private String rank;
-    private String type;
-    private String duration;
-    private String rating;
     private String background;
-    private String airing;
-    private String studio;
-    private String year;
     private String favorites;
-    private String popularity;
-    private String producers;
+    private String type;
     private String genres;
+    private String popularity;
+    private String published;
+
+    private String rating;
+    private String duration;
+    private String studio;
+    private String producers;
+    private String year;
     private String trailerURL;
     private String episodes;
     private String licensors;
@@ -31,29 +32,11 @@ public class AnimeInformation {
     public AnimeInformation() {}
 
     public AnimeInformation(
-            String id,
-            String title,
-            String image,
-            String desc,
-            String myAnimeListURL,
-            String titleEnglish,
-            String score,
-            String scoredBy,
-            String rank,
-            String type,
-            String duration,
-            String rating,
-            String background,
-            String airing,
-            String studio,
-            String year,
-            String favorites,
-            String popularity,
-            String producers,
-            String genres,
-            String trailerURL,
-            String episodes,
-            String licensors
+            String id, String title, String image, String desc, String myAnimeListURL,
+            String titleEnglish, String score, String scoredBy, String rank, String type,
+            String duration, String rating, String background, String published, String studio,
+            String year, String favorites, String popularity, String producers, String genres,
+            String trailerURL, String episodes, String licensors
     ) {
         this.id = id;
         this.title = title;
@@ -68,7 +51,7 @@ public class AnimeInformation {
         this.duration = duration;
         this.rating = rating;
         this.background = background;
-        this.airing = airing;
+        this.published = published;
         this.studio = studio;
         this.year = year;
         this.favorites = favorites;
@@ -184,12 +167,12 @@ public class AnimeInformation {
         this.background = background;
     }
 
-    public String getAiring() {
-        return airing;
+    public String getPublished() {
+        return published;
     }
 
-    public void setAiring(String airing) {
-        this.airing = airing;
+    public void setPublished(String published) {
+        this.published = published;
     }
 
     public String getStudio() {
