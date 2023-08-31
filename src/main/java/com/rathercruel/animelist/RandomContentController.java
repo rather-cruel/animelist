@@ -20,10 +20,10 @@ public class RandomContentController {
     public String randomContent(@PathVariable("content") String content) throws IOException {
         URL url = new URL("https://api.jikan.moe/v4/random/" + content);
         HttpsURLConnection connection = (HttpsURLConnection) url.openConnection();
-        int responseCode = connection.getResponseCode();
         connection.setRequestMethod("GET");
         String contentID = "";
 
+        int responseCode = connection.getResponseCode();
         if (responseCode == HttpsURLConnection.HTTP_OK) {
             StringBuilder sb = new StringBuilder();
             Scanner sc = new Scanner(connection.getInputStream());

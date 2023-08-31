@@ -24,6 +24,7 @@ public class MangaListController {
         GetTopManga getTopManga = new GetTopManga();
         List<Manga> mangaList = getTopManga.getMangaTop(urlObject);
 
+        model.addAttribute("active_link", "Manga");
         model.addAttribute("content_type", "manga");
         model.addAttribute("content_h1", "Manga");
         model.addAttribute("content_list", mangaList);

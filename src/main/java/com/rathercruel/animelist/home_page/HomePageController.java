@@ -17,6 +17,7 @@ public class HomePageController {
 
     @GetMapping("/")
     public String homePage(Model model) {
+        model.addAttribute("active_link", "Home");
         model.addAttribute("site_title", "AnimeList");
         return "index";
     }

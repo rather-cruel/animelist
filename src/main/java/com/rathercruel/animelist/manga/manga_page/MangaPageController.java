@@ -35,6 +35,7 @@ public class MangaPageController {
         GetRelatedContent getRelatedContent = new GetRelatedContent();
         mangaList = getRecommended.getAnimeRecommendations(urlRecommendations);
         relatedContentList = getRelatedContent.getRelatedContent(url);
+        model.addAttribute("active_link", "Manga");
         model.addAttribute("content_kind", "manga");
         model.addAttribute("content_list", mangaList);
         model.addAttribute("content_information", mangaInformationList.get(0));

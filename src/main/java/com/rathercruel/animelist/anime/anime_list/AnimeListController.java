@@ -64,6 +64,7 @@ public class AnimeListController {
 
         List<Anime> animeList = getTopAnime.getAnimeTop(urlObject);
 
+        model.addAttribute("active_link", "Anime");
         model.addAttribute("content_type", "anime");
         model.addAttribute("content_h1", "Anime");
         model.addAttribute("content_list", animeList);

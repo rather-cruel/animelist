@@ -33,6 +33,7 @@ public class AnimePageController {
         GetRelatedContent getRelatedContent = new GetRelatedContent();
         animeList = getRecommended.getAnimeRecommendations(urlRecommendations);
         relatedContentList = getRelatedContent.getRelatedContent(url);
+        model.addAttribute("active_link", "Anime");
         model.addAttribute("content_kind", "anime");
         model.addAttribute("content_list", animeList);
         model.addAttribute("content_information", animeInformationList.get(0));
