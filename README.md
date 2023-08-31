@@ -13,4 +13,4 @@ I'm using here: Spring, Jikan API, Gradle (Kotlin), JSON and my brain
 ![manga-recommendations](https://github.com/rather-cruel/animelist/assets/106997330/26c4d5c4-ee3c-4cf7-a22e-6d3b9f607e41)
 ![manga-recommendations-2](https://github.com/rather-cruel/animelist/assets/106997330/200288fe-fdd4-4e5a-8208-31550737fe8f)
 ![content-searc-anime](https://github.com/rather-cruel/animelist/assets/106997330/e8eabce6-9de6-4bd5-8350-69b39f96c902)
-![content-searc-manga](https://github.com/rather-cruel/animelist/assets/106997330/19fa1332-a4e3-47f8-a22f-fc88363218b8)
+![manga-search](https://github.com/rather-cruel/animelist/assets/106997330/25934999-a8f1-4626-b7bd-8e279782993c)
