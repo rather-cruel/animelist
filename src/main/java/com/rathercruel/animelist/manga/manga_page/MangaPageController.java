@@ -26,15 +26,16 @@ public class MangaPageController {
         URL urlRecommendations = new URL("https://api.jikan.moe/v4/manga/" + mangaID + "/recommendations");
         GetManga manga = new GetManga();
 
-        List<MangaInformation> mangaInformationList = manga.getManga(url);
+        int intMangaID = Integer.parseInt(mangaID);
+        List<MangaInformation> mangaInformationList = manga.getManga(url, intMangaID);
 
         List<RecommendedAnime> mangaList;
         List<RelatedContent> relatedContentList;
 
         GetRecommended getRecommended = new GetRecommended();
         GetRelatedContent getRelatedContent = new GetRelatedContent();
-        mangaList = getRecommended.getAnimeRecommendations(urlRecommendations);
-        relatedContentList = getRelatedContent.getRelatedContent(url);
+        mangaList = getRecommended.getAnimeRecommendations(urlRecommendations, intMangaID);
+        relatedContentList = getRelatedContent.getRelatedContent(url, intMangaID, "manga");
         model.addAttribute("active_link", "Manga");
         model.addAttribute("content_kind", "manga");
         model.addAttribute("content_list", mangaList);

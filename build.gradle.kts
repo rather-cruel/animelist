@@ -17,13 +17,13 @@ repositories {
 
 dependencies {
 //	implementation("org.springframework.boot:spring-boot-starter-data-jpa")
+	implementation("org.springframework.boot:spring-boot-starter-oauth2-client")
+
 	implementation("org.springframework.boot:spring-boot-starter-thymeleaf")
 	implementation("org.springframework.boot:spring-boot-starter-web")
 
 	implementation("org.json:json:20230618")
-
 	runtimeOnly("com.mysql:mysql-connector-j")
-
 	testImplementation("org.springframework.boot:spring-boot-starter-test")
 }
 

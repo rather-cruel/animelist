@@ -1,6 +1,7 @@
 package com.rathercruel.animelist.anime.get_anime;
 
 import com.rathercruel.animelist.anime.anime_page.AnimeInformation;
+import com.rathercruel.animelist.cache.Caching;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
@@ -9,15 +10,14 @@ import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Scanner;
 
 /**
  * @author Rather Cruel
  */
 public class GetAnime {
-    public List<AnimeInformation> getAnime(URL urlObject) throws IOException {
-        HttpsURLConnection connection = (HttpsURLConnection) urlObject.openConnection();
-        connection.setRequestMethod("GET");
+    public List<AnimeInformation> getAnime(URL urlObject, int intAnimeID) throws IOException {
+        Caching caching = new Caching(urlObject, intAnimeID, "anime", "basic");
+        JSONObject data = caching.connection().getJSONObject("data");
 
         String animeID = "";
         String animeTitle = "";
@@ -41,25 +41,15 @@ public class GetAnime {
         String animeTrailer = "";
         String animeEpisodes = "";
 
-        String animeProducers = "";
-        String animeGenres = "";
-        String animeLicensors = "";
+        String animeProducers;
+        String animeGenres;
+        String animeLicensors;
 
         List<String> animeProducersList = new ArrayList<>();
         List<String> animeGenresList = new ArrayList<>();
         List<String> animeLicensorList = new ArrayList<>();
 
-        int responseCode = connection.getResponseCode();
-        if (responseCode == HttpsURLConnection.HTTP_OK) {
-            StringBuilder sb = new StringBuilder();
-            Scanner sc = new Scanner(connection.getInputStream());
-            while (sc.hasNext()) {
-                sb.append(sc.nextLine());
-            }
-
-            JSONObject jsonObject = new JSONObject(sb.toString());
-            JSONObject data = (JSONObject) jsonObject.get("data");
-
+        if (caching.getResponseCode() == HttpsURLConnection.HTTP_OK || caching.getResponseCode() == 0) {
             try {
                 JSONArray licensorsArray = (JSONArray) data.get("licensors");
                 for (int i = 0; i < licensorsArray.toList().size(); i++) {
@@ -134,7 +124,7 @@ public class GetAnime {
             if (!data.isNull("synopsis"))
                 animeSynopsis = (String) data.get("synopsis");
         } else {
-            System.out.println("Response CODE: " + responseCode);
+            System.out.println("Response CODE: " + caching.getResponseCode());
         }
         List<String> animeStringLists = new ArrayList<>();
 

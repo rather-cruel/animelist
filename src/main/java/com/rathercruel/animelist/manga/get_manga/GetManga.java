@@ -1,5 +1,6 @@
 package com.rathercruel.animelist.manga.get_manga;
 
+import com.rathercruel.animelist.cache.Caching;
 import com.rathercruel.animelist.manga.manga_page.MangaInformation;
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -9,15 +10,14 @@ import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Scanner;
 
 /**
  * @author Rather Cruel
  */
 public class GetManga {
-    public List<MangaInformation> getManga(URL urlObject) throws IOException {
-        HttpsURLConnection connection = (HttpsURLConnection) urlObject.openConnection();
-        connection.setRequestMethod("GET");
+    public List<MangaInformation> getManga(URL urlObject, int intMangaID) throws IOException {
+        Caching caching = new Caching(urlObject, intMangaID, "manga", "basic");
+        JSONObject data = caching.connection().getJSONObject("data");
 
         String mangaID = "";
         String mangaMyAnimeListURL = "";
@@ -38,21 +38,11 @@ public class GetManga {
         String mangaSynopsis = "";
         String mangaBackground = "";
         String mangaAuthors = "";
-        String mangaGenres = "";
+        StringBuilder mangaGenres = new StringBuilder();
 
         List<String> mangaGenresList = new ArrayList<>();
 
-        int responseCode = connection.getResponseCode();
-        if (responseCode == HttpsURLConnection.HTTP_OK) {
-            StringBuilder sb = new StringBuilder();
-            Scanner sc = new Scanner(connection.getInputStream());
-            while (sc.hasNext()) {
-                sb.append(sc.nextLine());
-            }
-
-            JSONObject jsonObject = new JSONObject(sb.toString());
-            JSONObject data = (JSONObject) jsonObject.get("data");
-
+        if (caching.getResponseCode() == HttpsURLConnection.HTTP_OK || caching.getResponseCode() == 0) {
             mangaID = data.get("mal_id").toString();
             mangaMyAnimeListURL = data.get("url").toString();
 
@@ -104,16 +94,16 @@ public class GetManga {
             }
 
             for (int i = 0; i < mangaGenresList.size(); i++) {
-                mangaGenres += mangaGenresList.get(i);
-                if (i != mangaGenresList.size() - 1) mangaGenres += ", ";
+                mangaGenres.append(mangaGenresList.get(i));
+                if (i != mangaGenresList.size() - 1) mangaGenres.append(", ");
             }
         } else {
-            System.out.println("Response CODE: " + responseCode);
+            System.out.println("Response CODE: " + caching.getResponseCode());
         }
         return List.of(
                 new MangaInformation(mangaID, mangaMyAnimeListURL, mangaImage, mangaTitle, mangaTitleEnglish,
                         mangaType, mangaChapters, mangaVolumes, mangaStatus, mangaPublished,
                         mangaScore, mangaScoredBy, mangaRank, mangaPopularity, mangaMembers,
-                        mangaFavorites, mangaSynopsis, mangaBackground, mangaAuthors, mangaGenres));
+                        mangaFavorites, mangaSynopsis, mangaBackground, mangaAuthors, mangaGenres.toString()));
     }
 }

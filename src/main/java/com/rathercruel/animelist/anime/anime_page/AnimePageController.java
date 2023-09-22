@@ -23,16 +23,16 @@ public class AnimePageController {
         URL url = new URL("https://api.jikan.moe/v4/anime/" + animeID + "/full");
         URL urlRecommendations = new URL("https://api.jikan.moe/v4/anime/" + animeID + "/recommendations");
         GetAnime anime = new GetAnime();
+        int intAnimeId = Integer.parseInt(animeID);
 
-        List<AnimeInformation> animeInformationList = anime.getAnime(url);
-
+        List<AnimeInformation> animeInformationList = anime.getAnime(url, intAnimeId);
         List<RecommendedAnime> animeList;
         List<RelatedContent> relatedContentList;
-
         GetRecommended getRecommended = new GetRecommended();
         GetRelatedContent getRelatedContent = new GetRelatedContent();
-        animeList = getRecommended.getAnimeRecommendations(urlRecommendations);
-        relatedContentList = getRelatedContent.getRelatedContent(url);
+        animeList = getRecommended.getAnimeRecommendations(urlRecommendations, intAnimeId);
+        relatedContentList = getRelatedContent.getRelatedContent(url, intAnimeId, "anime");
+
         model.addAttribute("active_link", "Anime");
         model.addAttribute("content_kind", "anime");
         model.addAttribute("content_list", animeList);

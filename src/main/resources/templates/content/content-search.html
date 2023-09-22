@@ -32,7 +32,7 @@
                 <h5 class="cutoff-title card-title" th:text="${manga.title}" th:title="${manga.title}"/>
                 <small class="cutoff-title card-title" th:text="${manga.titleEnglish}" th:title="${manga.titleEnglish}"/>
                 <p class="cutoff-text card-text" th:text="${manga.synopsis}"/>
-                <div class="d-flex justify-content-between">
+                <div class="d-flex justify-content-between my-3">
                     <a th:href="'/manga/view/' + ${manga.id}" class="btn btn-primary">View Anime</a>
                     <a th:href="${manga.animeListURL}" target="_blank" class="btn btn-outline-secondary
                 d-inline-flex align-items-center" type="button">MyAnimeList</a>

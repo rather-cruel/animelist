@@ -12,7 +12,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import java.io.IOException;
 import java.net.URL;
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -81,18 +80,3 @@ public class AnimeListController {
             return "content/content";
     }
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
