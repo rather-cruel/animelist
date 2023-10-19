@@ -1,4 +1,4 @@
-package com.rathercruel.animelist.manga.manga_page;
+package com.rathercruel.animelist.manga.models;
 
 /**
  * @author Rather Cruel

@@ -1,7 +1,7 @@
 package com.rathercruel.animelist.manga.get_manga;
 
 import com.rathercruel.animelist.cache.Caching;
-import com.rathercruel.animelist.manga.manga_page.MangaInformation;
+import com.rathercruel.animelist.manga.models.MangaInformation;
 import org.json.JSONArray;
 import org.json.JSONObject;
 

@@ -1,6 +1,6 @@
 package com.rathercruel.animelist.manga.get_manga;
 
-import com.rathercruel.animelist.manga.manga_list.Manga;
+import com.rathercruel.animelist.manga.models.Manga;
 import org.json.JSONArray;
 import org.json.JSONObject;
 

@@ -1,9 +1,9 @@
-package com.rathercruel.animelist.anime.anime_list;
+package com.rathercruel.animelist.manga.models;
 
 /**
  * @author Rather Cruel
  */
-public class Anime {
+public class Manga {
     private String id;
     private String title;
     private String image;
@@ -11,15 +11,16 @@ public class Anime {
     private String animeListURL;
     private String titleEnglish;
 
-    public Anime() {
-    }
+    public Manga() {}
 
-    public Anime(String id,
-                 String title,
-                 String image,
-                 String synopsis,
-                 String animeListURL,
-                 String titleEnglish) {
+    public Manga(
+            String id,
+            String title,
+            String image,
+            String synopsis,
+            String animeListURL,
+            String titleEnglish
+    ) {
         this.id = id;
         this.title = title;
         this.image = image;

@@ -1,6 +1,7 @@
 package com.rathercruel.animelist.manga.manga_list;
 
 import com.rathercruel.animelist.manga.get_manga.GetTopManga;
+import com.rathercruel.animelist.manga.models.Manga;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;

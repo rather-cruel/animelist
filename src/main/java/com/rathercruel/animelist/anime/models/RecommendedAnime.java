@@ -1,32 +1,21 @@
-package com.rathercruel.animelist.manga.manga_list;
+package com.rathercruel.animelist.anime.models;
 
 /**
  * @author Rather Cruel
  */
-public class Manga {
+public class RecommendedAnime {
     private String id;
     private String title;
     private String image;
-    private String synopsis;
     private String animeListURL;
-    private String titleEnglish;
 
-    public Manga() {}
+    public RecommendedAnime() {}
 
-    public Manga(
-            String id,
-            String title,
-            String image,
-            String synopsis,
-            String animeListURL,
-            String titleEnglish
-    ) {
+    public RecommendedAnime(String id, String title, String image, String animeListURL) {
         this.id = id;
         this.title = title;
         this.image = image;
-        this.synopsis = synopsis;
         this.animeListURL = animeListURL;
-        this.titleEnglish = titleEnglish;
     }
 
     public String getId() {
@@ -53,27 +42,11 @@ public class Manga {
         this.image = image;
     }
 
-    public String getSynopsis() {
-        return synopsis;
-    }
-
-    public void setSynopsis(String synopsis) {
-        this.synopsis = synopsis;
-    }
-
     public String getAnimeListURL() {
         return animeListURL;
     }
 
     public void setAnimeListURL(String animeListURL) {
         this.animeListURL = animeListURL;
-    }
-
-    public String getTitleEnglish() {
-        return titleEnglish;
-    }
-
-    public void setTitleEnglish(String titleEnglish) {
-        this.titleEnglish = titleEnglish;
     }
 }

@@ -1,6 +1,6 @@
 package com.rathercruel.animelist.anime.get_anime;
 
-import com.rathercruel.animelist.anime.anime_list.Anime;
+import com.rathercruel.animelist.anime.models.Anime;
 import org.json.JSONArray;
 import org.json.JSONObject;
 

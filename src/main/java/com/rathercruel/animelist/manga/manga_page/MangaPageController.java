@@ -1,10 +1,11 @@
 package com.rathercruel.animelist.manga.manga_page;
 
-import com.rathercruel.animelist.anime.anime_page.RecommendedAnime;
-import com.rathercruel.animelist.anime.anime_page.RelatedContent;
+import com.rathercruel.animelist.anime.models.RecommendedAnime;
+import com.rathercruel.animelist.anime.models.RelatedContent;
 import com.rathercruel.animelist.anime.get_anime.GetRecommended;
 import com.rathercruel.animelist.anime.get_anime.GetRelatedContent;
 import com.rathercruel.animelist.manga.get_manga.GetManga;
+import com.rathercruel.animelist.manga.models.MangaInformation;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
