@@ -6,6 +6,9 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 import java.util.HashMap;
 
+// ratherKRUEL - login
+// ratherKRUEL1 - passwd
+
 @SpringBootApplication
 public class AnimelistApplication {
 

@@ -16,7 +16,10 @@ public class ApplicationUser implements UserDetails {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Integer userId;
 
+    @Column(unique = true)
     private String username;
+    @Column(unique = true)
+    private String email;
     private String password;
 
     @ManyToMany(fetch = FetchType.EAGER)
@@ -32,10 +35,11 @@ public class ApplicationUser implements UserDetails {
         this.authorities = new HashSet<Role>();
     }
 
-    public ApplicationUser(Integer userId, String username, String password, Set<Role> authorities) {
+    public ApplicationUser(Integer userId, String username, String email, String password, Set<Role> authorities) {
         super();
         this.userId = userId;
         this.username = username;
+        this.email = email;
         this.password = password;
         this.authorities = authorities;
     }
@@ -46,6 +50,14 @@ public class ApplicationUser implements UserDetails {
 
     public void setUserId(Integer userId) {
         this.userId = userId;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
     }
 
     @Override
